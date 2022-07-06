@@ -1,21 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+const mapboxKey = require('./mapBoxKey.js')
 
-import './app.css';
-import reactImage from './react.png';
+import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+
+mapboxgl.accessToken = mapboxKey;
 
 export default function App() {
-  const [username, setUsername] = useState(null);
-
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+  const [lng, setLng] = useState(0);
+  const [lat, setLat] = useState(51.476853);
+  const [zoom, setZoom] = useState(14);
+  
   useEffect(() => {
-    fetch('/api/getUsername')
-      .then(res => res.json())
-      .then(user => setUsername(user.username));
-  }, []);
+    if (map.current) return; // initialize map only once
+    map.current = new mapboxgl.Map({
+    container: mapContainer.current,
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [lng, lat],
+    zoom: zoom
+    });
+  });
 
   return (
     <div>
-      {username ? <h1>{`Hello ${username}`}</h1> : <h1>Loading.. please wait!</h1>}
-      <img src={reactImage} alt="react" />
+      <div ref={mapContainer} className="map-container" />
     </div>
   );
 }
