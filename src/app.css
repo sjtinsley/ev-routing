@@ -14,3 +14,11 @@ body {
   bottom: 0;
   width: 100%;
 }
+
+.direction-container {
+  z-index: 2;
+  position: absolute;
+  background: #fff;
+  top: 10px;
+  left: 10px;
+}
