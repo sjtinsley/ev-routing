@@ -3,7 +3,7 @@ import React from 'react';
 export const RouteForm = (props) => {
   return (
     <>
-    <form method={props.method} action={props.action}>
+    <form onSubmit={handleSubmit} className="route-form">
       <label for="origin">Origin</label>
       <input type="text" defaultValue="" placeholder="Enter your origin"></input>
       <label for="destination">Destination</label>
@@ -13,3 +13,4 @@ export const RouteForm = (props) => {
     </>
   )
 }
+
