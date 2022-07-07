@@ -4,6 +4,7 @@ class HereApi {
 
   constructor() {
     this.geoJSONS = [];
+    this.routeInput = null;
   }
 
   callApi = (origin, destination) => {
@@ -17,11 +18,12 @@ class HereApi {
     }).then(response => {
       return response.json()
     }).then(body => {
-    this.geoJSONS.push(`{ "type": "Point", "coordinates": [${body.routes[0].sections[0].departure.place.location.lng}, ${body.routes[0].sections[0].departure.place.location.lat}]`);
+    this.geoJSONS.push(`${body.routes[0].sections[0].departure.place.location.lng}%2C${body.routes[0].sections[0].departure.place.location.lat}`);
     body.routes[0].sections.forEach((section) => {
-      this.geoJSONS.push(`{ "type": "Point", "coordinates": [${section.arrival.place.location.lng}, ${section.arrival.place.location.lat}] }`)
+      this.geoJSONS.push(`${section.arrival.place.location.lng}%2C${section.arrival.place.location.lat}`)
     })
-    console.log(this.geoJSONS);
+    this.routeInput = this.geoJSONS.join('%3B');
+    console.log(this.routeInput);
     });
   };
 };
