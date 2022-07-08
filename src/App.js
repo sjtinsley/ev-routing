@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
-const mapboxKey = require('./mapBoxKey.js')
+import { Container } from './components/Container'
 
+
+const mapboxKey = require('./mapBoxKey.js')
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 
 mapboxgl.accessToken = mapboxKey;
@@ -25,6 +27,7 @@ export default function App() {
   return (
     <div>
       <div ref={mapContainer} className="map-container" />
+      <Container />
     </div>
   );
 }
