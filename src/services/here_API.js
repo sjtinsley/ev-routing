@@ -17,10 +17,12 @@ export const callHereApi = async (formData) => {
   }).then(response => {
     return response.json()
   }).then(body => {
+  geoJSONS.push(`${body.routes[0].sections[0].departure.place.location.lng}%2C${body.routes[0].sections[0].departure.place.location.lat}`);
   body.routes[0].sections.forEach((section) => {
-    geoJSONS.push(`{ "type": "Point", "coordinates": [${section.arrival.place.location.lng}, ${section.arrival.place.location.lat}] }`)
+    geoJSONS.push(`${section.arrival.place.location.lng}%2C${section.arrival.place.location.lat}`)
   })
-  return(geoJSONS);
+  console.log(geoJSONS.join('%3B'));
+  return geoJSONS.join('%3B');
   });
 };
 
