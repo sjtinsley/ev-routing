@@ -11,6 +11,9 @@ mapboxgl.accessToken = env.mapbox_access_token;
   const [lat, setLat] = useState(51.476853);
   const [zoom, setZoom] = useState(14);
   
+  
+  
+  
   useEffect(() => {
     if (map.current) return; // initialize map only once
     map.current = new mapboxgl.Map({
