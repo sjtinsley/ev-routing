@@ -1,6 +1,7 @@
 import React from 'react';
 import { callHereApi } from '../services/here_API.js';
 import { callGeocodingApi } from '../services/geocoding_API.js'
+import { callDirectionsApi } from '../services/directions_API.js';
 
 export default function RouteForm() {
 
@@ -9,8 +10,29 @@ export default function RouteForm() {
     var origin = await callGeocodingApi(event.target.origin.value)
     var destination = await callGeocodingApi(event.target.destination.value)
     // console.log(origin, destination);
-    await callHereApi(origin, destination);
+    const hereOutput = await callHereApi(origin, destination);
     console.log(`EV Routing API called`);
+    const route = await callDirectionsApi(hereOutput);
+    console.log(route);
+    Map.addsource("route-polyline", {
+        type: "geojson",
+        data: {
+          "type": "Feature",
+          "geometry": {
+            "type": "LineString",
+            "coordinates": route
+          }
+        }
+    })
+    Map.addlayer({
+      id:"route-on-map",
+      type: "fill",
+      source: "route-polyline",
+      paint: {
+        "fill-opacity": 0.5,
+        "fill-color": "#000"
+      }
+    })
   }
 
   return (
