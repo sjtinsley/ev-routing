@@ -1,11 +1,15 @@
 import React from 'react';
 import { callHereApi } from '../services/here_API.js';
+import { callGeocodingApi } from '../services/geocoding_API.js'
 
 export default function RouteForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await callHereApi(event.target);
+    var origin = await callGeocodingApi(event.target.origin.value)
+    var destination = await callGeocodingApi(event.target.destination.value)
+    // console.log(origin, destination);
+    await callHereApi(origin, destination);
     console.log(`EV Routing API called`);
   }
 
