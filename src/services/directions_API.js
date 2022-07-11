@@ -11,7 +11,7 @@ export const callDirectionsApi = async (callHereOutput) => {
   })
   
   const body = await response.json()
-  return body.routes[0].geometry;
+  return body.routes[0].geometry.coordinates;
   };
 
 

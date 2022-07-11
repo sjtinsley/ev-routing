@@ -3,7 +3,7 @@ import { callHereApi } from '../services/here_API.js';
 import { callGeocodingApi } from '../services/geocoding_API.js'
 import { callDirectionsApi } from '../services/directions_API.js';
 
-export default function RouteForm() {
+export default function RouteForm(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -14,25 +14,8 @@ export default function RouteForm() {
     console.log(`EV Routing API called`);
     const route = await callDirectionsApi(hereOutput);
     console.log(route);
-    Map.addsource("route-polyline", {
-        type: "geojson",
-        data: {
-          "type": "Feature",
-          "geometry": {
-            "type": "LineString",
-            "coordinates": route
-          }
-        }
-    })
-    Map.addlayer({
-      id:"route-on-map",
-      type: "fill",
-      source: "route-polyline",
-      paint: {
-        "fill-opacity": 0.5,
-        "fill-color": "#000"
-      }
-    })
+    // await Map.addRouteSource(route);
+    // await Map.renderRoute();
   }
 
   return (
