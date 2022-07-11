@@ -1,6 +1,6 @@
 const env = require("../../.env")
 
-const pois = []
+export const pois = []
 
 const getPois = async (callHereOutput) => {
   
