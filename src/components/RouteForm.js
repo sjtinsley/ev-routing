@@ -6,9 +6,9 @@ export default function RouteForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(event.target.origin.value)
     var origin = await callGeocodingApi(event.target.origin.value)
     var destination = await callGeocodingApi(event.target.destination.value)
+    // console.log(origin, destination);
     await callHereApi(origin, destination);
     console.log(`EV Routing API called`);
   }
