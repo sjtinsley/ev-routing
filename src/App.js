@@ -5,18 +5,21 @@ import { Container } from './components/Container'
 const env = require("../.env")
 
 const geojson = {
-  type: 'FeatureCollection',
-  features: [
-    {type: 'Feature', geometry: {type: 'Point', coordinates: [0, 51.5]}}
-  ]
-};
+        type: "Feature",
+        geometry: {
+            type: "LineString",
+            coordinates: [[0,51.4],[0, 51.5]]
+        }
+    };
 
 const layerStyle = {
-  id: 'point',
-  type: 'circle',
+  id: 'route-layer',
+  type: 'line',
   paint: {
-    'circle-radius': 100,
-    'circle-color': '#007cbf'
+    'line-color': '#007cbf',
+    'line-width': 8,
+
+
   }
 };
 
@@ -30,10 +33,10 @@ export default function App() {
       <Map
         initialViewState={{
           longitude: 0,
-          latitude: 51.476853,
+          latitude: 51.5,
           zoom: 14
         }}
-        style={{width: 1200, height: 800}}
+        style={{width: '100vw', height: '100vh'}}
         mapStyle="mapbox://styles/mapbox/streets-v11"
         mapboxAccessToken = {env.mapbox_access_token}
       >
