@@ -16,7 +16,7 @@ const layerStyle = {
   id: 'route-layer',
   type: 'line',
   paint: {
-    'line-color': '#007cbf',
+    'line-color': 'rgba(0,124,191,0.6)',
     'line-width': 8,
 
 
