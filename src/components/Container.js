@@ -5,7 +5,7 @@ export const Container = (props) => {
   return (
     <div className="direction-container">
   
-      <RouteForm />
+      <RouteForm setRoute={props.setRoute} />
 
     </div>
   )

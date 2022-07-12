@@ -4,19 +4,13 @@ import { Container } from './components/Container'
 
 const env = require("../.env")
 
-const geojson = {
-        type: "Feature",
-        geometry: {
-            type: "LineString",
-            coordinates: [[0,51.4],[0, 51.5]]
-        }
-    };
+
 
 const layerStyle = {
   id: 'route-layer',
   type: 'line',
   paint: {
-    'line-color': '#007cbf',
+    'line-color': 'rgba(0, 124, 191, 0.6)',
     'line-width': 8,
 
 
@@ -26,7 +20,13 @@ const layerStyle = {
 
 export default function App() {
   const [viewport, setViewport] = React.useState();
-  
+  const [route, setRoute] = React.useState({
+    type: "Feature",
+    geometry: {
+        type: "LineString",
+        coordinates: []
+    }});
+
   return (
     <div>
       <>
@@ -40,11 +40,11 @@ export default function App() {
         mapStyle="mapbox://styles/mapbox/streets-v11"
         mapboxAccessToken = {env.mapbox_access_token}
       >
-        <Source id="my-data" type="geojson" data={geojson}>
+        <Source id="my-data" type="geojson" data={route}>
           <Layer {...layerStyle} />
         </Source>
       </Map>
-      <Container />
+      <Container setRoute={setRoute} />
       </>
     </div>
   );

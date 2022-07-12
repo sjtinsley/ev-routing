@@ -1,30 +1,24 @@
-import React from 'react';
-import { callHereApi } from '../services/here_API.js';
-import { callGeocodingApi } from '../services/geocoding_API.js'
-import { callDirectionsApi } from '../services/directions_API.js';
+import React, { useState } from 'react';
+import { getRoute } from '../hooks/getroute.js';
 
 export default function RouteForm(props) {
 
+  const[origin, setOrigin] = useState();
+  const[destination, setDestination] = useState();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    var origin = await callGeocodingApi(event.target.origin.value)
-    var destination = await callGeocodingApi(event.target.destination.value)
-    // console.log(origin, destination);
-    const hereOutput = await callHereApi(origin, destination);
-    console.log(`EV Routing API called`);
-    const route = await callDirectionsApi(hereOutput);
-    console.log(route);
-    // await Map.addRouteSource(route);
-    // await Map.renderRoute();
+    const routegeojson = await getRoute(origin, destination);
+    props.setRoute(routegeojson);
   }
 
   return (
     <>
     <form onSubmit={handleSubmit} className="route-form">
       <label for="origin">Origin</label>
-      <input type="text" name="origin" defaultValue="" placeholder="Enter your origin"></input>
+      <input type="text" name="origin" value={origin} onChange={e => setOrigin(e.target.value)} placeholder="Enter your origin"></input>
       <label for="destination">Destination</label>
-      <input type="text" name="destination" defaultValue="" placeholder="Enter your destination"></input>
+      <input type="text" name="destination" value={destination} onChange={e => setDestination(e.target.value)} placeholder="Enter your destination"></input>
       <input type="submit" value="submit"></input>
     </form>
     </>
