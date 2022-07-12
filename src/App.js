@@ -1,33 +1,51 @@
-import React, { useRef, useEffect, useState } from 'react';
+import * as React from 'react';
+import Map, { Source, Layer } from 'react-map-gl'
 import { Container } from './components/Container'
 
+const env = require("../.env")
 
-const mapboxKey = require('./mapBoxKey.js')
-import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 
-mapboxgl.accessToken = mapboxKey;
+
+const layerStyle = {
+  id: 'route-layer',
+  type: 'line',
+  paint: {
+    'line-color': 'rgba(0, 124, 191, 0.6)',
+    'line-width': 8,
+
+
+  }
+};
+
 
 export default function App() {
-  const mapContainer = useRef(null);
-  const map = useRef(null);
-  const [lng, setLng] = useState(0);
-  const [lat, setLat] = useState(51.476853);
-  const [zoom, setZoom] = useState(14);
-  
-  useEffect(() => {
-    if (map.current) return; // initialize map only once
-    map.current = new mapboxgl.Map({
-    container: mapContainer.current,
-    style: 'mapbox://styles/mapbox/streets-v11',
-    center: [lng, lat],
-    zoom: zoom
-    });
-  });
+  const [viewport, setViewport] = React.useState();
+  const [route, setRoute] = React.useState({
+    type: "Feature",
+    geometry: {
+        type: "LineString",
+        coordinates: []
+    }});
 
   return (
     <div>
-      <div ref={mapContainer} className="map-container" />
-      <Container />
+      <>
+      <Map
+        initialViewState={{
+          longitude: 0,
+          latitude: 51.5,
+          zoom: 14
+        }}
+        style={{width: '100vw', height: '100vh'}}
+        mapStyle="mapbox://styles/mapbox/streets-v11"
+        mapboxAccessToken = {env.mapbox_access_token}
+      >
+        <Source id="my-data" type="geojson" data={route}>
+          <Layer {...layerStyle} />
+        </Source>
+      </Map>
+      <Container setRoute={setRoute} />
+      </>
     </div>
   );
 }
