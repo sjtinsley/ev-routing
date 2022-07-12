@@ -11,7 +11,7 @@ export const callGeocodingApi = async (textInput) => {
   })
   const body = await response.json()
   const coordinates = `${body.features[0].center[1]},${body.features[0].center[0]}`
-  // console.log(coordinates);
+  console.log(coordinates);
   return coordinates;
 };
 

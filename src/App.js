@@ -26,8 +26,7 @@ const layerStyle = {
 
 export default function App() {
   const [viewport, setViewport] = React.useState();
-  const [data, setData] = React.useState();
-
+  
   return (
     <div>
       <>
@@ -41,11 +40,9 @@ export default function App() {
         mapStyle="mapbox://styles/mapbox/streets-v11"
         mapboxAccessToken = {env.mapbox_access_token}
       >
-        <SourceProvider data={geojson}>
-          <Source id="my-data" type="geojson" data={props.geojson}>
-            <Layer {...layerStyle} />
-          </Source>
-        </SourceProvider>
+        <Source id="my-data" type="geojson" data={geojson}>
+          <Layer {...layerStyle} />
+        </Source>
       </Map>
       <Container />
       </>
