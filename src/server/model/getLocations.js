@@ -1,6 +1,6 @@
-const env = require("../../.env")
+const env = require("../../../.env")
 
-const getPois = async (callHereOutput) => {
+const getLocations = async (callHereOutput) => {
   
   const pois = []
   const waypoints = callHereOutput.split(`%3B`);
@@ -29,8 +29,10 @@ const getPois = async (callHereOutput) => {
     })
   });
 
-  console.log(pois);
-  return(pois[0]);
+  // console.log(pois);
+  return(pois);
 }
 
-const output = getPois("51.75551886387588,-0.26710535612281244%3B55.41634003991329,-1.7109630298352374");
+// const output = getPois("51.75551886387588,-0.26710535612281244%3B55.41634003991329,-1.7109630298352374");
+// %252C, %253B
+module.exports = getLocations;

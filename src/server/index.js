@@ -1,53 +1,18 @@
+const getLocations = require('./model/getLocations');
+const reverseCoordinates = require('./model/reverseCoordinates')
+
 const Koa = require('koa');
 const Router = require('koa-router');
 const serve = require('koa-static');
 var cors = require('@koa/cors');
 
-
 const app = new Koa();
 app.use(cors());
 const router = new Router();
 
-const env = require("../../.env")
-
-const pois = []
-
-const getPois = async (callHereOutput) => {
-  
-  const waypoints = callHereOutput.split(`%3B`);
-  const urls = waypoints.map((waypoint) => {
-    return `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${env.google_api_key}&location=${waypoint}&radius=1500`
-  })
-
-  const allPromise = Promise.all(urls.map(url =>
-    fetch(url).then(response => {
-      return response.json()
-    })
-  ))
-
-  const data = await allPromise;
-
-  // console.log(data[0].results);
-  data.forEach((waypoint) => {
-    waypoint.results.forEach((poi) => {
-      let destinations = []
-      destinations.push({
-        name: poi.name,
-        location: poi.geometry.location,
-        rating: poi.rating
-      })
-      pois.push(destinations)
-    })
-  });
-  console.log(pois);
-  return(pois[0]);
-}
-
-
-getPois("51.75551886387588,-0.26710535612281244");
-
-router.get('/', (ctx, next) => {
-	ctx.body = pois;
+router.get('/', async (ctx, next) => {
+  let input = reverseCoordinates(ctx.request.url);
+	ctx.body = await getLocations(input);
 	next();
 });
 
