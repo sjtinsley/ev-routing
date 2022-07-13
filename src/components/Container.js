@@ -1,12 +1,9 @@
-import React from 'react';
-import RouteForm  from './RouteForm';
+// import React, { useEffect } from 'react';
+// import RouteForm  from './RouteForm';
+// import { Map, useMap } from 'react-map-gl'
 
-export const Container = (props) => {
-  return (
-    <div className="direction-container">
-  
-      <RouteForm setRoute={props.setRoute} />
+// export const Container = (props) => {
 
-    </div>
-  )
-}
+
+//   )
+// }

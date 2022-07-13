@@ -1,26 +1,37 @@
 import React, { useState } from 'react';
 import { getRoute } from '../hooks/getroute.js';
+import { Map, useMap } from 'react-map-gl'
+import * as bbox from 'geojson-bbox'
 
 export default function RouteForm(props) {
 
   const[origin, setOrigin] = useState();
   const[destination, setDestination] = useState();
+  const {current: map} = useMap();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const routegeojson = await getRoute(origin, destination);
     props.setRoute(routegeojson);
-  }
-
+    const routezoom = await bbox(routegeojson);
+    map.current.fitBounds(
+      [routezoom],
+      {padding: 40, duration: 1000}
+    );
+  };
+  
   return (
     <>
-    <form onSubmit={handleSubmit} className="route-form">
-      <label for="origin">Origin</label>
-      <input type="text" name="origin" value={origin} onChange={e => setOrigin(e.target.value)} placeholder="Enter your origin"></input>
-      <label for="destination">Destination</label>
-      <input type="text" name="destination" value={destination} onChange={e => setDestination(e.target.value)} placeholder="Enter your destination"></input>
-      <input type="submit" value="submit"></input>
-    </form>
+    <div className="direction-container">
+  
+      <form onSubmit={handleSubmit} className="route-form">
+        <label for="origin">Origin</label>
+        <input type="text" name="origin" value={origin} onChange={e => setOrigin(e.target.value)} placeholder="Enter your origin"></input>
+        <label for="destination">Destination</label>
+        <input type="text" name="destination" value={destination} onChange={e => setDestination(e.target.value)} placeholder="Enter your destination"></input>
+        <input type="submit" value="submit"></input>
+      </form>
+      </div>
     </>
   )
 }
