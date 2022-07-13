@@ -3,15 +3,28 @@ const env = require("../../.env")
 export const callDirectionsApi = async (callHereOutput) => {
   
   const geoJSON = null;
+  let tripMins = '';
+  let tripMiles = '';
 
-  const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${callHereOutput}?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${env.mapbox_access_token}`;
+  const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${callHereOutput}?geometries=geojson&language=en&overview=full&steps=true&annotations=distance%2cduration&access_token=${env.mapbox_access_token}`;
   
   const response = await fetch(url, {
     method: "GET",
   })
   
   const body = await response.json()
-  return body.routes[0].geometry.coordinates;
+  tripMins = Math.round((body.routes[0].duration)/60);
+  tripMiles = Math.round((body.routes[0].distance)/1609);
+  console.log({
+    geometry: body.routes[0].geometry.coordinates,
+    distance: tripMiles,
+    duration: tripMins
+  })
+  return {
+    geometry: body.routes[0].geometry.coordinates,
+    distance: tripMiles,
+    duration: tripMins
+  };
   };
 
 
