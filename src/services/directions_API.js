@@ -4,7 +4,7 @@ export const callDirectionsApi = async (callHereOutput) => {
   
   const geoJSON = null;
   let tripMins = '';
-  let tripKms = '';
+  let tripMiles = '';
 
   const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${callHereOutput}?geometries=geojson&language=en&overview=full&steps=true&annotations=distance%2cduration&access_token=${env.mapbox_access_token}`;
   
@@ -14,9 +14,17 @@ export const callDirectionsApi = async (callHereOutput) => {
   
   const body = await response.json()
   tripMins = Math.round((body.routes[0].duration)/60);
-  tripKms = Math.round((body.routes[0].distance)/1000);
-  console.log(tripKms, tripMins)
-  return body.routes[0].geometry.coordinates;
+  tripMiles = Math.round((body.routes[0].distance)/1609);
+  console.log({
+    geometry: body.routes[0].geometry.coordinates,
+    distance: tripMiles,
+    duration: tripMins
+  })
+  return {
+    geometry: body.routes[0].geometry.coordinates,
+    distance: tripMiles,
+    duration: tripMins
+  };
   };
 
 
