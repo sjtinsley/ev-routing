@@ -6,14 +6,21 @@ const env = require("../.env")
 
 
 
-const layerStyle = {
+const routeStyle = {
   id: 'route-layer',
   type: 'line',
   paint: {
     'line-color': 'rgba(0, 124, 191, 0.6)',
     'line-width': 8,
+  }
+};
 
-
+const waypointStyle = {
+  id: 'waypoint-layer',
+  type: 'circle',
+  paint: {
+    'circle-color': 'rgba(0, 124, 191, 0.6)',
+    'circle-radius': 8,
   }
 };
 
@@ -26,6 +33,16 @@ export default function App() {
         type: "LineString",
         coordinates: []
     }});
+    
+    const [waypoints, setWaypoints] = React.useState({
+      type: 'FeatureCollection',
+      features: [{
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: []
+        }}]
+    });
 
     const [viewState, setViewState] = React.useState({
       bounds: [
@@ -36,21 +53,25 @@ export default function App() {
   return (
     <>
     <div>
-      <MapProvider>
+      {/* <MapProvider> */}
       <Map
         {...viewState}
-        id="myMap"
+        // id="myMap"
         onMove={e => setViewState(e.viewState)}
         style={{width: '100vw', height: '100vh'}}
         mapStyle="mapbox://styles/mapbox/streets-v11"
         mapboxAccessToken = {env.mapbox_access_token}
       >
         <Source id="my-data" type="geojson" data={route}>
-          <Layer {...layerStyle} />
+          <Layer {...routeStyle} />
+        </Source>
+
+        <Source id="not-data" type="geojson" data={waypoints}>
+          <Layer {...waypointStyle} />
         </Source>
       </Map>
-      <RouteForm setRoute={setRoute} />
-      </MapProvider>
+      <RouteForm setRoute={setRoute} setWaypoints={setWaypoints} />
+      {/* </MapProvider> */}
       </div>
       </>
     

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { getRoute } from '../hooks/getroute.js';
 import { useMap } from 'react-map-gl'
 import * as bbox from 'geojson-bbox'
+import { getWayPoints } from '../hooks/getwaypoints.js';
 
 export default function RouteForm(props) {
 
@@ -9,16 +10,60 @@ export default function RouteForm(props) {
   const[destination, setDestination] = useState();
   const {myMap} = useMap();
 
+  const cleanWaypoints = (waypoints) => {
+    const waypointCoordinates = []
+    const coordinateSize = 2
+
+    var waypointSource = {
+      type: 'FeatureCollection',
+      features: []
+    };
+    const cleanWaypoints = waypoints.replaceAll("%2C", ",").replaceAll("%3B",",")
+    const waypointNumbers = cleanWaypoints.split(",")
+    for (var i = 0; i<waypointNumbers.length; i++){
+      waypointNumbers[i] = parseFloat(waypointNumbers[i]);
+    }
+    for(var i = 0; i< waypointNumbers.length; i+= coordinateSize){
+      const chunk = waypointNumbers.slice(i, i + coordinateSize)
+      waypointCoordinates.push(chunk)    
+    }
+    for (var i = 0; i<waypointCoordinates.length; i++){
+      waypointSource.features[i] = createWaypointFeature(waypointCoordinates[i]);
+    }
+    return waypointSource
+  }
+
+  const createWaypointFeature = (coordinates) => {
+    return {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: coordinates
+      }
+    }
+  }
+
+  const setProps = (routeline, routepoints) => {
+    props.setRoute(routeline);
+    props.setWaypoints(routepoints);
+  }
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const routegeojson = await getRoute(origin, destination);
-    props.setRoute(routegeojson);
-    const routezoom = await bbox(routegeojson);
-    console.log(myMap)
-    myMap.current.fitBounds(
-      [routezoom],
-      {padding: 40, duration: 1000}
-    );
+    const herewaypoints = await getWayPoints(origin, destination)
+    const routegeojson = await getRoute(herewaypoints);
+    const routewaypoints = cleanWaypoints(herewaypoints);
+    setProps(routegeojson, routewaypoints);
+    
+
+
+    // const routezoom = await bbox(routegeojson);
+    // console.log(myMap)
+    // myMap.current.fitBounds(
+    //   [routezoom],
+    //   {padding: 40, duration: 1000}
+    // );
   };
   
   return (
@@ -26,9 +71,9 @@ export default function RouteForm(props) {
     <div className="direction-container">
   
       <form onSubmit={handleSubmit} className="route-form">
-        <label for="origin">Origin</label>
+        <label htmlFor="origin">Origin</label>
         <input type="text" name="origin" value={origin} onChange={e => setOrigin(e.target.value)} placeholder="Enter your origin"></input>
-        <label for="destination">Destination</label>
+        <label htmlFor="destination">Destination</label>
         <input type="text" name="destination" value={destination} onChange={e => setDestination(e.target.value)} placeholder="Enter your destination"></input>
         <input type="submit" value="submit"></input>
       </form>
