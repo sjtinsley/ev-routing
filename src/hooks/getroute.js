@@ -9,7 +9,7 @@ export const getRoute = async (hereOutput) => {
     type: "Feature",
     geometry: {
         type: "LineString",
-        coordinates: route
+        coordinates: route.geometry
     }
   };
   console.log(routegeojson)
