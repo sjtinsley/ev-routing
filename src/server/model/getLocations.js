@@ -16,7 +16,6 @@ const getLocations = async (callHereOutput) => {
 
   const data = await allPromise;
 
-  // console.log(data[0].results);
   data.forEach((waypoint) => {
     waypoint.results.forEach((poi) => {
       let destinations = []
@@ -28,11 +27,7 @@ const getLocations = async (callHereOutput) => {
       pois.push(destinations)
     })
   });
-
-  // console.log(pois);
   return(pois);
 }
 
-// const output = getPois("51.75551886387588,-0.26710535612281244%3B55.41634003991329,-1.7109630298352374");
-// %252C, %253B
 module.exports = getLocations;
