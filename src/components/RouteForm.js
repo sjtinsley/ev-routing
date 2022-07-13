@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getPOIs } from '../hooks/getPOIs.js';
 import { getRoute } from '../hooks/getroute.js';
 import { useMap } from 'react-map-gl'
 import * as bbox from 'geojson-bbox'
@@ -52,10 +53,10 @@ export default function RouteForm(props) {
     props.setResultsVisible(true)
   }
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const hereWaypoints = await getWayPoints(origin, destination)
+    const pois = await getPOIs(herewaypoints);
     const routeOutput = await getRoute(hereWaypoints);
     const routeGeojson = routeOutput.route
     const routeDuration = routeOutput.duration
