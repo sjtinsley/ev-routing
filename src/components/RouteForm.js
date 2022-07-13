@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getPOIs } from '../hooks/getPOIs.js';
 import { getRoute } from '../hooks/getroute.js';
 
 export default function RouteForm(props) {
@@ -8,6 +9,7 @@ export default function RouteForm(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const pois = await getPOIs(origin, destination);
     const routegeojson = await getRoute(origin, destination);
     props.setRoute(routegeojson);
   }
