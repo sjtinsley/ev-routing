@@ -51,8 +51,8 @@ export default function RouteForm(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const pois = await getPOIs(origin, destination);
     const herewaypoints = await getWayPoints(origin, destination)
+    const pois = await getPOIs(herewaypoints);
     const routegeojson = await getRoute(herewaypoints);
     const routewaypoints = cleanWaypoints(herewaypoints);
     setProps(routegeojson, routewaypoints);    
