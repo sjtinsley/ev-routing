@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import { getRoute } from '../hooks/getroute.js';
-import { Map, useMap } from 'react-map-gl'
+import { useMap } from 'react-map-gl'
 import * as bbox from 'geojson-bbox'
 
 export default function RouteForm(props) {
 
   const[origin, setOrigin] = useState();
   const[destination, setDestination] = useState();
-  const {current: map} = useMap();
+  const {myMap} = useMap();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const routegeojson = await getRoute(origin, destination);
     props.setRoute(routegeojson);
     const routezoom = await bbox(routegeojson);
-    map.current.fitBounds(
+    console.log(myMap)
+    myMap.current.fitBounds(
       [routezoom],
       {padding: 40, duration: 1000}
     );
