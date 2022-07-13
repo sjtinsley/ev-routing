@@ -16,7 +16,7 @@ body {
   width: 100%;
 }
 
-.direction-container {
+.container {
   z-index: 2;
   position: absolute;
   background: #fff;
@@ -39,4 +39,8 @@ body {
 
 .route-form > input[type=submit] {
   margin: 0 auto
+}
+
+.hidden {
+  display: none
 }

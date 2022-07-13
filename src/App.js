@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Map, { Source, Layer, MapProvider } from 'react-map-gl'
 import RouteForm from './components/RouteForm'
+import RouteResults from './components/RouteResults'
 
 const env = require("../.env")
 
@@ -44,6 +45,13 @@ export default function App() {
         }}]
     });
 
+    const[duration, setDuration] = React.useState()
+    const[distance, setDistance] = React.useState()
+    const[inputVisible, setInputVisible] = React.useState(true)
+    const[resultsVisible, setResultsVisible] = React.useState(false)
+
+
+
     const [viewState, setViewState] = React.useState({
       bounds: [
         -7.57216793459, 49.8, 1.68153079591, 58.8
@@ -52,7 +60,6 @@ export default function App() {
 
   return (
     <>
-    <div>
       {/* <MapProvider> */}
       <Map
         {...viewState}
@@ -70,9 +77,9 @@ export default function App() {
           <Layer {...waypointStyle} />
         </Source>
       </Map>
-      <RouteForm setRoute={setRoute} setWaypoints={setWaypoints} />
+      {inputVisible && <RouteForm setRoute={setRoute} setWaypoints={setWaypoints} setDuration={setDuration} setDistance={setDistance} setInputVisible={setInputVisible} setResultsVisible={setResultsVisible} />}
+      {resultsVisible && <RouteResults duration={duration} distance={distance} setResultsVisible={setResultsVisible} setInputVisible={setInputVisible} />}
       {/* </MapProvider> */}
-      </div>
       </>
     
   );

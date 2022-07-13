@@ -15,11 +15,11 @@ export const callDirectionsApi = async (callHereOutput) => {
   const body = await response.json()
   tripMins = Math.round((body.routes[0].duration)/60);
   tripMiles = Math.round((body.routes[0].distance)/1609);
-  console.log({
-    geometry: body.routes[0].geometry.coordinates,
-    distance: tripMiles,
-    duration: tripMins
-  })
+  // console.log({
+  //   geometry: body.routes[0].geometry.coordinates,
+  //   distance: tripMiles,
+  //   duration: tripMins
+  // })
   return {
     geometry: body.routes[0].geometry.coordinates,
     distance: tripMiles,

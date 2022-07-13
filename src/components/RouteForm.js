@@ -18,8 +18,8 @@ export default function RouteForm(props) {
       type: 'FeatureCollection',
       features: []
     };
-    const cleanWaypoints = waypoints.replaceAll("%2C", ",").replaceAll("%3B",",")
-    const waypointNumbers = cleanWaypoints.split(",")
+    const cleanerWaypoints = waypoints.replaceAll("%2C", ",").replaceAll("%3B",",")
+    const waypointNumbers = cleanerWaypoints.split(",")
     for (var i = 0; i<waypointNumbers.length; i++){
       waypointNumbers[i] = parseFloat(waypointNumbers[i]);
     }
@@ -43,18 +43,25 @@ export default function RouteForm(props) {
     }
   }
 
-  const setProps = (routeline, routepoints) => {
-    props.setRoute(routeline);
-    props.setWaypoints(routepoints);
+  const setProps = (routeLine, routePoints, routeDuration, routeDistance) => {
+    props.setRoute(routeLine);
+    props.setWaypoints(routePoints);
+    props.setDuration(routeDuration)
+    props.setDistance(routeDistance)
+    props.setInputVisible(false)
+    props.setResultsVisible(true)
   }
 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const herewaypoints = await getWayPoints(origin, destination)
-    const routegeojson = await getRoute(herewaypoints);
-    const routewaypoints = cleanWaypoints(herewaypoints);
-    setProps(routegeojson, routewaypoints);
+    const hereWaypoints = await getWayPoints(origin, destination)
+    const routeOutput = await getRoute(hereWaypoints);
+    const routeGeojson = routeOutput.route
+    const routeDuration = routeOutput.duration
+    const routeDistance = routeOutput.distance
+    const routeWaypoints = cleanWaypoints(hereWaypoints);
+    setProps(routeGeojson, routeWaypoints, routeDuration, routeDistance);
     
 
 
@@ -68,7 +75,7 @@ export default function RouteForm(props) {
   
   return (
     <>
-    <div className="direction-container">
+    <div className="container">
   
       <form onSubmit={handleSubmit} className="route-form">
         <label htmlFor="origin">Origin</label>
