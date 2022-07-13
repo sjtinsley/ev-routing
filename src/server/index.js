@@ -21,6 +21,7 @@ const getPois = async (callHereOutput) => {
       return response.json()
     })
     )).then(data => {
+      console.log(data.length)
       data.forEach((place) => {
         let destinations = []
         place.results.forEach((poi) => {
@@ -32,14 +33,15 @@ const getPois = async (callHereOutput) => {
           pois.push(destinations)
         })
       });
-      console.log(pois[0]);
-      return(pois);
+      console.log(pois.length);
+      return(pois[0]);
   })
 }
 
+getPois("51.75551886387588,-0.26710535612281244");
+
 router.get('/', (ctx, next) => {
-  const data = getPois("51.80636635113677%2C-0.3465737695457438%3B51.82465490329337%2C-0.3675335170844881");
-	ctx.body = data;
+	ctx.body = pois;
 	next();
 });
 
