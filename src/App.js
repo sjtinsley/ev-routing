@@ -4,8 +4,6 @@ import { Container } from './components/Container'
 
 const env = require("../.env")
 
-
-
 const layerStyle = {
   id: 'route-layer',
   type: 'line',
