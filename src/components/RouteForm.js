@@ -75,7 +75,13 @@ export default function RouteForm(props) {
         <label htmlFor="destination">Destination</label>
         <input type="text" name="destination" value={destination} onChange={e => setDestination(e.target.value)} placeholder="Enter your destination"></input>
         <label htmlFor="vehicle">Choose your vehicle</label>
-
+        <select label="Choose your vehicle" options={[
+          {label: Audi, value: audi},
+          {label: BMW, value: bmw},
+          {label: Tesla, value: tesla}
+        ]}
+        value={vehicle} onChange={e => setVehicle(e.target.value)}
+        />
         <input type="submit" value="submit"></input>
       </form>
       </div>
