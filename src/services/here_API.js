@@ -1,6 +1,6 @@
 const env = require("../../.env")
 
-export const callHereApi = async (origin, destination, vehicle="Kia_e_Niro") => {
+export const callHereApi = async (origin, destination, vehicle="Mercedes_Benz_eVito", startCharge=0.65) => {
   const geoJSONS = [];
 
   const vehicleTable = [
@@ -49,18 +49,19 @@ export const callHereApi = async (origin, destination, vehicle="Kia_e_Niro") => 
     {make_model: "Tesla_Model_3", max_charge: 75},
     {make_model: "Volkswagen_e_up!", max_charge: 18.7},
     {make_model: "Volkswagen_e_Golf", max_charge: 35.8},
-    {make_model: "Volkswagen_Golf_GTE", max_charge: 8.7},
     {make_model: "Volkswagen_e_Crafter", max_charge: 35.8},
     {make_model: "Volvo_C30_Electric", max_charge: 24}
   ]
     
+  const car =  vehicleTable.find(veh => veh.make_model === vehicle);
 
+  const curveMaxValue = ((car.max_charge)*0.85) > 80 ? ((car.max_charge)*0.85) : 80;
 
   const url = `https://router.hereapi.com/v8/routes?apiKey=${env.here_api_key}&departureTime=any&origin=${origin}&ev[connectorTypes]=iec62196Type2Combo&transportMode=car&destination=${destination}
 &return=summary&ev[freeFlowSpeedTable]=0,0.239,27,0.239,45,0.259,60,0.196,75,0.207,90,0.238,100,0.26,110,0.296,120,0.337,130,0.351,250,0.351
 &ev[trafficSpeedTable]=0,0.349,27,0.319,45,0.329,60,0.266,75,0.287,90,0.318,100,0.33,110,0.335,120,0.35,130,0.36,250,0.36&ev[auxiliaryConsumption]=1.8
-&ev[ascent]=9&ev[descent]=4.3&ev[makeReachable]=true&ev[initialCharge]=48&ev[maxCharge]=${max_charge}&ev[chargingCurve]=0,239,32,199,56,167,60,130,64,111,68,83,72,55,76,33,78,17,80,1
-&ev[maxChargeAfterChargingStation]=72`;
+&ev[ascent]=9&ev[descent]=4.3&ev[makeReachable]=true&ev[initialCharge]=${(car.max_charge)*startCharge}&ev[maxCharge]=${car.max_charge}&ev[chargingCurve]=0,239,32,199,56,167,60,130,64,111,68,83,72,55,76,33,78,17,${curveMaxValue},1
+&ev[maxChargeAfterChargingStation]=${(car.max_charge)*0.85}`;
   
   const response = await fetch(url, {
     method: "GET",
