@@ -12,7 +12,6 @@ export const getRoute = async (hereOutput) => {
         coordinates: route.geometry
     }
   };
-  console.log(routegeojson)
   return {route: routegeojson,
     distance: route.distance,
     duration: route.duration
