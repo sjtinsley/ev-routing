@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Map, { Source, Layer, MapProvider } from 'react-map-gl'
 import RouteForm from './components/RouteForm'
+import RouteResults from './components/RouteResults'
 
 const env = require("../.env")
 
@@ -19,8 +20,17 @@ const waypointStyle = {
   id: 'waypoint-layer',
   type: 'circle',
   paint: {
-    'circle-color': 'rgba(0, 124, 191, 0.6)',
+    'circle-color': 'rgba(0, 124, 191, 1)',
     'circle-radius': 8,
+  }
+};
+
+const markerStyle = {
+  id: 'marker-layer',
+  type: 'circle',
+  paint: {
+    'circle-color': 'rgba(0, 0, 0, 1)',
+    'circle-radius': 2,
   }
 };
 
@@ -44,6 +54,23 @@ export default function App() {
         }}]
     });
 
+    const [chargingMarkers, setChargingMarkers] = React.useState({
+      type: 'FeatureCollection',
+      features: [{
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: []
+        }}]
+    });
+
+    const[duration, setDuration] = React.useState()
+    const[distance, setDistance] = React.useState()
+    const[chargingPlaces, setChargingPlaces] = React.useState()
+    const[inputVisible, setInputVisible] = React.useState(true)
+    const[resultsVisible, setResultsVisible] = React.useState(false)
+    // const[stopCoordinates, setStopCoordinates] = React.useState()
+
     const [viewState, setViewState] = React.useState({
       bounds: [
         -7.57216793459, 49.8, 1.68153079591, 58.8
@@ -52,7 +79,6 @@ export default function App() {
 
   return (
     <>
-    <div>
       {/* <MapProvider> */}
       <Map
         {...viewState}
@@ -62,17 +88,43 @@ export default function App() {
         mapStyle="mapbox://styles/sambutton12/cl5l0l3zy009n14nvvwxu6t0h"
         mapboxAccessToken = {env.mapbox_access_token}
       >
-        <Source id="my-data" type="geojson" data={route}>
+        <Source id="route" type="geojson" data={route}>
           <Layer {...routeStyle} />
         </Source>
 
-        <Source id="not-data" type="geojson" data={waypoints}>
+        <Source id="waypoints" type="geojson" data={waypoints}>
           <Layer {...waypointStyle} />
         </Source>
+
+        <Source id="chargingMarkers" type="geojson" data={chargingMarkers}>
+          <Layer {...markerStyle} />
+        </Source>
+
       </Map>
-      <RouteForm setRoute={setRoute} setWaypoints={setWaypoints} />
+      {inputVisible &&
+        <RouteForm 
+          setRoute={setRoute} 
+          setWaypoints={setWaypoints} 
+          setDuration={setDuration} 
+          setDistance={setDistance} 
+          setInputVisible={setInputVisible} 
+          setResultsVisible={setResultsVisible} 
+          setChargingPlaces={setChargingPlaces}
+          setChargingMarkers={setChargingMarkers} 
+          // setStopCoordinates={setStopCoordinates}
+        />
+      }
+      {resultsVisible && 
+        <RouteResults 
+          duration={duration} 
+          distance={distance} 
+          setResultsVisible={setResultsVisible} 
+          setInputVisible={setInputVisible} 
+          chargingPlaces={chargingPlaces} 
+          // stopCoordinates={waypoints}
+        />
+      }
       {/* </MapProvider> */}
-      </div>
       </>
     
   );
