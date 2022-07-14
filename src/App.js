@@ -59,7 +59,7 @@ export default function App() {
         // id="myMap"
         onMove={e => setViewState(e.viewState)}
         style={{width: '100vw', height: '100vh'}}
-        mapStyle="mapbox://styles/mapbox/streets-v11"
+        mapStyle="mapbox://styles/sambutton12/cl5l0l3zy009n14nvvwxu6t0h"
         mapboxAccessToken = {env.mapbox_access_token}
       >
         <Source id="my-data" type="geojson" data={route}>
