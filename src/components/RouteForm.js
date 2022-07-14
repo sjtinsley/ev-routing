@@ -9,6 +9,7 @@ export default function RouteForm(props) {
 
   const[origin, setOrigin] = useState();
   const[destination, setDestination] = useState();
+  const[vehicle, setVehicle] = useState();
   const {myMap} = useMap();
 
   const cleanWaypoints = (waypoints) => {
