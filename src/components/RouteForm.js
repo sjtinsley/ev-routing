@@ -128,7 +128,7 @@ export default function RouteForm(props) {
           <option value="Volkswagen_e_Crafter">Volkswagen e Crafter</option>
           <option value="Volvo_C30_Electric">Volvo C30 Electric</option>
         </select><label htmlFor="chargeLevel">Current charge percentage</label>
-        <input type="number" min="1" max="100" name="chargeLevel" value={chargeLevel} onChange={e => setChargeLevel(e.target.value)} placeholder="What's the charge %?"></input>
+        <input type="number" min="1" max="100" name="chargeLevel" value={chargeLevel} onChange={e => setChargeLevel(e.target.value)} placeholder="What's the charge %?"></input><br></br><br></br>
         <input type="submit" value="Let's go!"></input>
       </form>
       </div>
