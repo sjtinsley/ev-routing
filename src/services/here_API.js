@@ -30,7 +30,6 @@ export const callHereApi = async (origin, destination, vehicle="Mercedes_Benz_eV
     {make_model: "Peugeot_Partner_Electric", max_charge: 22.5},
     {make_model: "Renault_Fluence_Z.E.", max_charge: 22},
     {make_model: "Renault_Kangoo_Z.E._33", max_charge: 33},
-    {make_model: "Renault_Twizy_80", max_charge: 6.1},
     {make_model: "Renault_ZOE_R240", max_charge: 22},
     {make_model: "Renault_ZOE_R90", max_charge: 41},
     {make_model: "Renault_ZOE_Q90", max_charge: 41},
