@@ -99,6 +99,8 @@ export default function RouteForm(props) {
   return (
     <>
     <div className="container">
+      <img src="/img/timtom.png" className="timtom-logo"></img>
+      <p className="header">Let's plan your route</p>
   
       <form onSubmit={handleSubmit} className="route-form">
         <label htmlFor="origin">Origin</label>
@@ -158,9 +160,12 @@ export default function RouteForm(props) {
           <option value="Volkswagen_e_Crafter">Volkswagen e Crafter</option>
           <option value="Volvo_C30_Electric">Volvo C30 Electric</option>
         </select><label htmlFor="chargeLevel">Current charge percentage</label>
-        <input type="number" min="1" max="100" name="chargeLevel" value={chargeLevel} onChange={e => setChargeLevel(e.target.value)} placeholder="What's the charge %?"></input><br></br><br></br>
+        <input type="number" min="1" max="100" name="chargeLevel" value={chargeLevel} onChange={e => setChargeLevel(e.target.value)} placeholder="What's the charge %?"></input>
         <input type="submit" value="Let's go!"></input>
       </form>
+
+      <p>Built by:</p>
+      <img src="/img/techbros.png" className="techbros-logo"></img>
       </div>
     </>
   )

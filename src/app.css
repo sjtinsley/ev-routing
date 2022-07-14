@@ -3,8 +3,7 @@ h1 {
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  text-align: center;
+  font-family: Raleway, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -23,8 +22,11 @@ body {
   top: 10px;
   left: 10px;
   padding: 10px;
-  text-align: center;
   border-radius: 5px;
+  max-height: 90vh;
+  scroll-behavior: smooth;
+  overflow: scroll;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }
 
 .route-form > input[type=text] {
@@ -34,13 +36,127 @@ body {
 
 .route-form > label {
   display: block;
-  margin-bottom: 5px
+  margin-bottom: 7px;
+  font-weight: 600;
 }
 
 .route-form > input[type=submit] {
   margin: 0 auto
 }
 
-.hidden {
-  display: none
+input[type=number], input[type=text]  {
+  width: calc(100% - 30px);
+  font-family: Raleway;
+}
+
+input[type=number] {
+  margin-bottom: 17px;
+}
+
+input[type=text] {
+  margin-bottom: 13px;
+}
+
+select {
+  width: calc(100% - 22px);
+  margin-bottom: 10px;
+  font-family: Raleway;
+}
+
+
+.poi {
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(0,0,0, 0.2);
+  padding-bottom: 5px;
+}
+
+.stop-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #333;
+  font-weight: 800;
+}
+
+.poi-rating {
+  font-size: 14px;
+}
+
+.trip-details {
+  margin-bottom: 10px;
+}
+
+.trip-header {
+  font-weight: 800;
+}
+
+input[type="submit"], button {
+  background-color: hsl(39, 50%, 54%);
+  border: 1px solid transparent;
+  border-radius: 3px;
+  box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Raleway;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.15385;
+  letter-spacing: 0.07em;
+  margin: 0;
+  outline: none;
+  padding: 8px .8em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+input[type="submit"]:hover, button:hover, input[type="submit"]:focus, button:focus {
+  background-color: hsl(39, 50%, 46%);
+}
+
+input[type="submit"]:focus, button:focus {
+  box-shadow: 0 0 0 4px rgba(156, 111, 28, 0.15);
+}
+
+input[type="submit"]:active, button:active {
+  background-color: hsl(39, 50%, 66%);
+  box-shadow: none;
+}
+
+.header {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+  font-weight: 800
+
+}
+
+.stop-count {
+  margin-bottom: 10px;
+}
+
+.timtom-logo, .techbros-logo  { 
+  max-width: 200px;
+  margin-bottom: 5px;
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    z-index: 2;
+    position: fixed;
+    background: #fff;
+    bottom: 10px;
+    left: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    max-height: 30vh;
+    scroll-behavior: smooth;
+    overflow: scroll;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  }
 }

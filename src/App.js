@@ -11,8 +11,8 @@ const routeStyle = {
   id: 'route-layer',
   type: 'line',
   paint: {
-    'line-color': 'rgba(0, 124, 191, 0.6)',
-    'line-width': 8,
+    'line-color': 'hsl(39, 50%, 64%)',
+    'line-width': 5,
   }
 };
 
@@ -20,7 +20,7 @@ const waypointStyle = {
   id: 'waypoint-layer',
   type: 'circle',
   paint: {
-    'circle-color': 'rgba(0, 124, 191, 1)',
+    'circle-color': 'hsl(39, 50%, 54%)',
     'circle-radius': 8,
   }
 };
@@ -29,7 +29,7 @@ const markerStyle = {
   id: 'marker-layer',
   type: 'circle',
   paint: {
-    'circle-color': 'rgba(0, 0, 0, 1)',
+    'circle-color': 'rgba(0, 0, 0, 0.5)',
     'circle-radius': 2,
   }
 };
