@@ -73,6 +73,8 @@ export default function RouteForm(props) {
         <input type="text" name="origin" value={origin} onChange={e => setOrigin(e.target.value)} placeholder="Enter your origin"></input>
         <label htmlFor="destination">Destination</label>
         <input type="text" name="destination" value={destination} onChange={e => setDestination(e.target.value)} placeholder="Enter your destination"></input>
+        <label htmlFor="vehicle">Choose your vehicle</label>
+
         <input type="submit" value="submit"></input>
       </form>
       </div>
