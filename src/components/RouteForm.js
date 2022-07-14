@@ -52,7 +52,7 @@ export default function RouteForm(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const herewaypoints = await getWayPoints(origin, destination)
+    const herewaypoints = await getWayPoints(origin, destination, vehicle)
     const pois = await getPOIs(herewaypoints);
     const routegeojson = await getRoute(herewaypoints);
     const routewaypoints = cleanWaypoints(herewaypoints);
@@ -75,7 +75,7 @@ export default function RouteForm(props) {
         <label htmlFor="destination">Destination</label>
         <input type="text" name="destination" value={destination} onChange={e => setDestination(e.target.value)} placeholder="Enter your destination"></input>
         <label htmlFor="vehicle">Choose your vehicle</label>
-        <select value="" onChange={e => setVehicle(e.target.value)}>
+        <select value={vehicle} onChange={e => setVehicle(e.target.value)}>
           <option value="Audi_e_tron_55">Audi e tron 55</option>
           <option value="BMW_i3">BMW i3</option>
           <option value="BMW_i3s">BMW i3s</option>
