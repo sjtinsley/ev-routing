@@ -10,6 +10,7 @@ export default function RouteForm(props) {
   const[origin, setOrigin] = useState();
   const[destination, setDestination] = useState();
   const[vehicle, setVehicle] = useState();
+  const[chargeLevel, setChargeLevel] = useState();
   const {myMap} = useMap();
 
   const cleanWaypoints = (waypoints) => {
@@ -52,7 +53,7 @@ export default function RouteForm(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const herewaypoints = await getWayPoints(origin, destination, vehicle)
+    const herewaypoints = await getWayPoints(origin, destination, vehicle, chargeLevel)
     const pois = await getPOIs(herewaypoints);
     const routegeojson = await getRoute(herewaypoints);
     const routewaypoints = cleanWaypoints(herewaypoints);
@@ -126,8 +127,9 @@ export default function RouteForm(props) {
           <option value="Volkswagen_Golf_GTE">Volkswagen Golf GTE</option>
           <option value="Volkswagen_e_Crafter">Volkswagen e Crafter</option>
           <option value="Volvo_C30_Electric">Volvo C30 Electric</option>
-        </select>
-        <input type="submit" value="submit"></input>
+        </select><label htmlFor="chargeLevel">Current charge percentage</label>
+        <input type="number" min="1" max="100" name="chargeLevel" value={chargeLevel} onChange={e => setChargeLevel(e.target.value)} placeholder="What's the charge %?"></input><br></br><br></br>
+        <input type="submit" value="Let's go!"></input>
       </form>
       </div>
     </>

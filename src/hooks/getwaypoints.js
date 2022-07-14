@@ -3,10 +3,10 @@ import { callGeocodingApi } from '../services/geocoding_API.js'
 import { callDirectionsApi } from '../services/directions_API.js';
 
 
-export const getWayPoints = async (textOrigin, textDestination, vehicle) => {
+export const getWayPoints = async (textOrigin, textDestination, vehicle, chargeLevel) => {
   var origin = await callGeocodingApi(textOrigin)
   var destination = await callGeocodingApi(textDestination)
   // console.log(origin, destination);
-  const hereOutput = await callHereApi(origin, destination, vehicle);
+  const hereOutput = await callHereApi(origin, destination, vehicle, (chargeLevel/100));
   return hereOutput
 }
